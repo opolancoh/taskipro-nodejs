@@ -1,0 +1,18 @@
+{
+  "app": {
+    "items": {
+      "limit": 10,
+      "limitMax": 100
+    },
+    "security": {
+      "tokenExpiresIn": 86400
+    }
+  },
+  "db": {
+    "name": "taskipro-dev"
+  },
+  "secrets": {
+    "dbUri": "",
+    "jwtPrivateKey": ""
+  }
+}

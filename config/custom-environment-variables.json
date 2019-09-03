@@ -1,0 +1,6 @@
+{
+  "secrets": {
+    "dbUri": "TASKIPRO_DB_URI",
+    "jwtPrivateKey": "TASKIPRO_JWTPK"
+  }
+}

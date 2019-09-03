@@ -1,0 +1,2 @@
+require('./csvToArray.test');
+
