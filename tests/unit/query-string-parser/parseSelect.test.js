@@ -1,4 +1,4 @@
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const { parseSelect } = require('../../../helpers/query-string-parser');
 
@@ -32,9 +32,7 @@ describe('parseSelect', () => {
     const result = parseSelect(item.value);
     it(`should return ${JSON.stringify(item.result)} for value '${
       item.value
-    }' and type '${typeof item.value}' | result ${JSON.stringify(
-      result
-    )}`, () => {
+    }' and type '${typeof item.value}' | result ${JSON.stringify(result)}`, () => {
       expect(result).to.have.members(item.result);
     });
   });

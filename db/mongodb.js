@@ -15,9 +15,9 @@ mongoose
   })
   .then(() => {
     console.log(`Successfully connected to database!`);
-    /*if (process.argv[2] === 'seed') {
+    /* if (process.argv[2] === 'seed') {
       require('./startup/seed/execute-seed');
-    }*/
+    } */
   })
   .catch(err => {
     console.log(`\nError connecting to database ${db}\n`);

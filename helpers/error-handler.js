@@ -1,8 +1,8 @@
-//const logger = require('../helpers/logger.helper');
-//const logService = require('../api/modules/log/log-service');
-const { code_500 } = require('./base-response');
+// const logger = require('../helpers/logger.helper');
+// const logService = require('../api/modules/log/log-service');
+const { rc500 } = require('./base-response');
 
-/*const logToDb = async item => {
+/* const logToDb = async item => {
   try {
     const result = await logService.create(item);
     if (result.code !== 201) {
@@ -13,17 +13,17 @@ const { code_500 } = require('./base-response');
     logger.error(`#LogToDbException ${ex}`);
     logger.error(item.description);
   }
-};*/
+}; */
 
-const systemErrorHandler = function(err, req, res, next) {
-  customErrorHandler(err, 'error');
+const systemErrorHandler = (err, req, res) => {
+  // customErrorHandler(err, 'error');
   res.status(200).send({
-    ...code_500
+    ...rc500
   });
 };
 
-const customErrorHandler = function(err, level) {
-  //console.log('stack', err.stack);
+const customErrorHandler = (err, level) => {
+  // console.log('stack', err.stack);
   const errorLevel = level || 'error';
   const errorDescription = `#Exception ${err.stack}`;
   const item = {
@@ -32,8 +32,8 @@ const customErrorHandler = function(err, level) {
     description: errorDescription
   };
   console.log(item);
-  //logger.log(errorLevel, errorDescription);
-  //logToDb(item);
+  // logger.log(errorLevel, errorDescription);
+  // logToDb(item);
 };
 
 module.exports = { systemErrorHandler, customErrorHandler };

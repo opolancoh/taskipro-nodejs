@@ -1,5 +1,3 @@
-'use strict';
-
 /*
 0: error
 1: warn
@@ -31,19 +29,13 @@ const logger = createLogger({
       format: format.combine(
         format.colorize(),
         format.timestamp(),
-        format.printf(
-          info =>
-            `${info.level} ${info.timestamp} ${info.message}`
-        )
+        format.printf(info => `${info.level} ${info.timestamp} ${info.message}`)
       )
     }),
     new transports.File({
       format: format.combine(
         format.timestamp(),
-        format.printf(
-          info =>
-            `${info.level}\t${info.timestamp}\t${info.message}`
-        )
+        format.printf(info => `${info.level}\t${info.timestamp}\t${info.message}`)
       ),
       filename
     })

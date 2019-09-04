@@ -9,7 +9,7 @@ const sysRoles = {
 
 function getRoles() {
   const ret = [];
-  for (const role in roles) ret.push(role);
+  Object.keys(roles).forEach(role => ret.push(roles[role]));
   return ret;
 }
 

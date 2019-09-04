@@ -1,8 +1,9 @@
-exports.randomString = (len, charSet) => {
-  charSet =
-    charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+exports.randomString = (
+  len,
+  charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+) => {
   let randomString = '';
-  for (let i = 0; i < len; i++) {
+  for (let i = 0; i < len; i += 1) {
     const randomPoz = Math.floor(Math.random() * charSet.length);
     randomString += charSet.substring(randomPoz, randomPoz + 1);
   }
@@ -19,12 +20,10 @@ exports.createValidDataForPost = (schema, data) => {
 
 exports.createValidDataForGetSelect = (schema, data) => {
   data.forEach(element => {
-    let query = element.query;
+    const { query } = element;
     let queryArray = [];
     if (query) {
-      queryArray = query
-        .substring(query.indexOf('=') + 1, query.length)
-        .split(',');
+      queryArray = query.substring(query.indexOf('=') + 1, query.length).split(',');
     }
 
     if (queryArray.length === 0) {
@@ -40,11 +39,7 @@ exports.createValidDataForGetSelect = (schema, data) => {
   });
 };
 
-exports.createValidDataForGetPagination = (
-  data,
-  totalCount,
-  defaultMaxRowLimit
-) => {
+exports.createValidDataForGetPagination = (data, totalCount, defaultMaxRowLimit) => {
   data.forEach(element => {
     let dataLength = element.limit < totalCount ? element.limit : totalCount;
     if (dataLength > defaultMaxRowLimit) dataLength = defaultMaxRowLimit;

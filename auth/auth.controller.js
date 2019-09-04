@@ -1,13 +1,14 @@
-//const auth = require('../middleware/auth');
+// const auth = require('../middleware/auth');
 const express = require('express');
+
 const router = express.Router();
 
 const service = require('./auth.service');
 
-/*router.get('/me', auth, async (req, res) => {
+/* router.get('/me', auth, async (req, res) => {
   const user = await User.findById(req.user._id).select('-password');
   res.send(user);
-});*/
+}); */
 
 router.post('/login', async (req, res) => {
   const result = await service.login(req.body);

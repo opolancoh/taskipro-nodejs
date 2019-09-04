@@ -1,12 +1,11 @@
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const { isAlphanumericSpecial } = require('../../../helpers/validation-helper');
 
 describe('isAlphanumericSpecial', () => {
   [
     {
-      value:
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 -_',
+      value: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 -_',
       result: true
     },
     {

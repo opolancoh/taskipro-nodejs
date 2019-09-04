@@ -64,7 +64,7 @@ const schema = {
 };
 
 // validates the schema
-modelSchema.statics.validate = function(value, onCreate = true) {
+modelSchema.statics.validate = (value, onCreate = true) => {
   return validateSchema(value, schema, onCreate);
 };
 

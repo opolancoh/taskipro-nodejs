@@ -1,4 +1,4 @@
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const { parseSort } = require('../../../helpers/query-string-parser');
 
@@ -45,16 +45,14 @@ describe('parseSort', () => {
 
     it(`should return ${JSON.stringify(item.result)} for value '${
       item.value
-    }' and type '${typeof item.value}' | result ${JSON.stringify(
-      result
-    )}`, () => {
+    }' and type '${typeof item.value}' | result ${JSON.stringify(result)}`, () => {
       expect(result).to.be.an('object');
-      for (const prop in result) {
+      Object.keys(result).forEach(key => {
         expect(result)
-          .to.have.a.property(prop)
+          .to.have.a.property(key)
           .to.be.a('number')
-          .to.equal(result[prop]);
-      }
+          .to.equal(result[key]);
+      });
     });
   });
 });

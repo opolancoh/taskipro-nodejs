@@ -1,4 +1,4 @@
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const { parseOffset } = require('../../../helpers/query-string-parser');
 

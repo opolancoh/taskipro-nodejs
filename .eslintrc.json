@@ -4,7 +4,8 @@
     "node": true,
     "mocha": true
   },
-  "extends": "eslint:recommended",
+  "extends": ["eslint-config-airbnb-base", "prettier"],
+  "plugins": ["prettier"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -14,6 +15,9 @@
     "sourceType": "module"
   },
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "prettier/prettier": ["error", { "usePrettierrc": true }],
+    "no-param-reassign": ["error", { "props": false }],
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }]
   }
 }

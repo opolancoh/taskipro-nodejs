@@ -1,5 +1,5 @@
 const request = require('supertest');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const { apiUrl, authToken } = require('./params');
 
@@ -45,15 +45,16 @@ exports.run = ({ resourceSuffix, validData, invalidData }) => {
             expect(res.body.d).to.not.have.a.property(field.name);
           });
           // check for properties and values
-          for (const [key, value] of Object.entries(data)) {
+          Object.entries(data).forEach(key => {
+            const value = data[key];
             if (typeof value !== 'object') {
-              expect(res.body.d).to.have.a.property(key, data[key]);
+              expect(res.body.d).to.have.a.property(key, value);
             } else {
               const obj = {};
               obj[key] = value;
               expect(res.body.d).to.deep.include(obj);
             }
-          }
+          });
         });
       });
     });

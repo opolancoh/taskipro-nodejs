@@ -1,9 +1,5 @@
-const {randomString}=require('../../_shared/helper')
-const baseInvalidData = require('../../_shared/data/base-invalid-data').getData(
-  'CREATE'
-);
-
-
+const { randomString } = require('../../_shared/helper');
+const baseInvalidData = require('../../_shared/data/base-invalid-data').getData('CREATE');
 
 const invalidData = [
   {
@@ -13,7 +9,7 @@ const invalidData = [
       roles: ['user']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should not CREATE a record if 'name' is missing`;
     }
   },
@@ -24,7 +20,7 @@ const invalidData = [
       roles: ['user']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should not CREATE a record if 'email' is missing`;
     }
   },
@@ -35,7 +31,7 @@ const invalidData = [
       roles: ['user']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should not CREATE a record if 'password' is missing`;
     }
   },
@@ -46,7 +42,7 @@ const invalidData = [
       password: 'User400Pa$$'
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should NOT CREATE a record if 'roles' are missing`;
     }
   },
@@ -58,7 +54,7 @@ const invalidData = [
       roles: ['rol']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should NOT CREATE a record if 'roles' are invalid`;
     }
   },
@@ -70,7 +66,7 @@ const invalidData = [
       roles: ['user', 'rol']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should NOT CREATE a record if 'roles' are invalid`;
     }
   },
@@ -82,7 +78,7 @@ const invalidData = [
       roles: ['user']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should not CREATE a record if 'name' length is less than the minimum`;
     }
   },
@@ -94,7 +90,7 @@ const invalidData = [
       roles: ['user']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should not CREATE a record if NAME length is greater than the maximum`;
     }
   },
@@ -106,7 +102,7 @@ const invalidData = [
       roles: ['user']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should not CREATE a record if 'email' is not valid`;
     }
   },
@@ -118,7 +114,7 @@ const invalidData = [
       roles: ['user']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should not CREATE a record if 'email' is not valid`;
     }
   },
@@ -130,19 +126,19 @@ const invalidData = [
       roles: ['user']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should not CREATE a record if 'email' is not valid`;
     }
   },
   {
     body: {
       name: 'User 400',
-      email: randomString(300) + '@taskipro.com',
+      email: `${randomString(300)}@taskipro.com`,
       password: 'User400Pa$$',
       roles: ['user']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should not CREATE a record if 'email' length is greater than the maximum`;
     }
   },
@@ -154,7 +150,7 @@ const invalidData = [
       roles: ['user']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should not CREATE a record if 'password' length is less than the minimum`;
     }
   },
@@ -166,7 +162,7 @@ const invalidData = [
       roles: ['user']
     },
     code: 400,
-    message: function() {
+    message: () => {
       return `should not CREATE a record if 'password' length is greater than the maximum`;
     }
   },
@@ -178,7 +174,7 @@ const invalidData = [
       roles: ['user']
     },
     code: 409,
-    message: function() {
+    message: () => {
       return `should not CREATE a duplicated record`;
     }
   },

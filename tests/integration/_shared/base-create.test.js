@@ -1,5 +1,5 @@
 const request = require('supertest');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const { apiUrl, authToken } = require('./params');
 

@@ -1,7 +1,4 @@
-const {
-  parseSelect,
-  parsePopulate
-} = require('../helpers/query-string-parser');
+const { parseSelect, parsePopulate } = require('../helpers/query-string-parser');
 
 function requestParamsForFindById(req, res, next) {
   const params = {};

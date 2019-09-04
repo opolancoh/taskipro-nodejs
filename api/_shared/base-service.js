@@ -1,12 +1,19 @@
-const { code_200, code_400, code_404 } = require('../../helpers/base-response');
+const { rc200, rc400, rc404 } = require('../../helpers/base-response');
 const { isObjectId } = require('../../helpers/validation-helper');
+
+// helper functions
+const setAuditInformation = (schema, onCreate = true) => {
+  const now = new Date();
+  if (onCreate) schema.createdAt = now;
+  schema.updatedAt = now;
+};
 
 const baseFind = async (
   model,
   { limit, offset, sort, select, filter, populate, setTotalCount }
 ) => {
   // set metadata to the response
-  const _meta = {
+  const meta = {
     limit,
     offset
   };
@@ -23,16 +30,16 @@ const baseFind = async (
   // set totalCount
   if (setTotalCount) {
     if (data.length > 0) {
-      _meta.totalCount = await model
+      meta.totalCount = await model
         .find(filter)
         .countDocuments()
         .exec();
-    } else _meta.totalCount = 0;
+    } else meta.totalCount = 0;
   }
 
   return {
-    ...code_200,
-    _meta,
+    ...rc200,
+    meta,
     d: data
   };
 };
@@ -41,7 +48,7 @@ const baseFindById = async (model, id, { select, populate }) => {
   // input validation
   if (!isObjectId(id))
     return {
-      ...code_400,
+      ...rc400,
       errors: {
         id: [`Id '${id}' is not valid.`]
       }
@@ -55,18 +62,18 @@ const baseFindById = async (model, id, { select, populate }) => {
 
   if (data) {
     return {
-      ...code_200,
+      ...rc200,
       d: data
     };
-  } else
-    return {
-      ...code_404,
-      errors: {
-        id: [
-          `The specified item Id '${id}' was not found, or you do not have permission to access it.`
-        ]
-      }
-    };
+  }
+  return {
+    ...rc404,
+    errors: {
+      id: [
+        `The specified item Id '${id}' was not found, or you do not have permission to access it.`
+      ]
+    }
+  };
 };
 
 const baseUpdate = async (Model, id, data) => {
@@ -74,7 +81,7 @@ const baseUpdate = async (Model, id, data) => {
   // validate id
   if (!isObjectId(id))
     return {
-      ...code_400,
+      ...rc400,
       errors: {
         id: [`Id '${id}' is not valid.`]
       }
@@ -83,7 +90,7 @@ const baseUpdate = async (Model, id, data) => {
   const isEmpty = Object.keys(data).length === 0;
   if (isEmpty)
     return {
-      ...code_400,
+      ...rc400,
       errors: {
         $_: [`You must provide at least one field to be updated.`]
       }
@@ -92,7 +99,7 @@ const baseUpdate = async (Model, id, data) => {
   const { errors } = Model.validate(data, false);
   if (errors)
     return {
-      ...code_400,
+      ...rc400,
       errors
     };
 
@@ -110,27 +117,27 @@ const baseUpdate = async (Model, id, data) => {
     }
   );
 
-  if (recordUpdated) {
+  if (!recordUpdated) {
     return {
-      ...code_200,
-      d: recordUpdated
-    };
-  } else
-    return {
-      ...code_404,
+      ...rc404,
       errors: {
         id: [
           `The specified item Id '${id}' was not found, or you do not have permission to access it.`
         ]
       }
     };
+  }
+  return {
+    ...rc200,
+    d: recordUpdated
+  };
 };
 
 const baseRemove = async (Model, id, options = {}) => {
   // validate id
   if (!isObjectId(id))
     return {
-      ...code_400,
+      ...rc400,
       errors: {
         id: [`Id '${id}' is not valid.`]
       }
@@ -146,18 +153,18 @@ const baseRemove = async (Model, id, options = {}) => {
 
   if (recordDeleted)
     return {
-      ...code_200,
+      ...rc200,
       d: recordDeleted
     };
-  else
-    return {
-      ...code_404,
-      errors: {
-        id: [
-          `The specified item Id '${id}' was not found, or you do not have permission to access it.`
-        ]
-      }
-    };
+
+  return {
+    ...rc404,
+    errors: {
+      id: [
+        `The specified item Id '${id}' was not found, or you do not have permission to access it.`
+      ]
+    }
+  };
 };
 
 /*
@@ -186,9 +193,9 @@ baseService.create = async (body, model, callback) => {
     code: 201,
     d: itemCreated
   };
-};*/
+}; */
 
-/*const getSelectableFields = (select, nonReturnableFields) => {
+/* const getSelectableFields = (select, nonReturnableFields) => {
   let selectableFields = select;
   if (nonReturnableFields) {
     const selectFiltered = select.filter(function(e) {
@@ -202,7 +209,7 @@ baseService.create = async (body, model, callback) => {
     );
   }
   return selectableFields;
-};*/
+};
 /*
 const deleteNonReturnableFieldsFromObject = (obj, nonReturnableFields) => {
   nonReturnableFields.forEach(element => delete obj._doc[element]);
@@ -214,13 +221,7 @@ const deleteNonReturnableFieldsFromArray = (arr, nonReturnableFields) => {
   });
 };
 
-module.exports = baseService;*/
-
-const setAuditInformation = (schema, onCreate = true) => {
-  const now = new Date();
-  if (onCreate) schema.createdAt = now;
-  schema.updatedAt = now;
-};
+module.exports = baseService; */
 
 module.exports = {
   baseFind,

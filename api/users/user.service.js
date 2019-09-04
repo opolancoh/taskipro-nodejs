@@ -7,19 +7,19 @@ const {
   baseRemove,
   setAuditInformation
 } = require('../_shared/base-service');
-const { code_400, code_409, code_201 } = require('../../helpers/base-response');
-//const { isObjectId } = require('../../helpers/validation-helper');
+const { rc400, rc409, rc201 } = require('../../helpers/base-response');
+
 const { User } = require('./user.model');
 
 /**
  * Creates a new record.
  */
-const create = async function(data) {
+const create = async data => {
   // input validation
   const { errors } = User.validate(data, true);
   if (errors)
     return {
-      ...code_400,
+      ...rc400,
       errors
     };
 
@@ -27,7 +27,7 @@ const create = async function(data) {
   const userExists = await User.findOne({ email: data.email });
   if (userExists)
     return {
-      ...code_409,
+      ...rc409,
       errors: {
         email: [`"${data.email}" already exists.`]
       }
@@ -40,25 +40,25 @@ const create = async function(data) {
   setAuditInformation(data);
 
   // create new record
-  let newResource = new User(data);
+  const newResource = new User(data);
   newResource.password = await bcrypt.hash(data.password, 10);
   await newResource.save();
 
-  return { ...code_201, message: 'User created.', d: newResource };
+  return { ...rc201, message: 'User created.', d: newResource };
 };
 
 /**
  * Returns a list of records based on multiple parameters.
  */
-const find = async function(params) {
-  return await baseFind(User, params);
+const find = async params => {
+  return baseFind(User, params);
 };
 
 /**
  * Returns a record based on id and multiple parameters.
  */
-const findById = async function(id, params) {
-  return await baseFindById(User, id, params);
+const findById = async (id, params) => {
+  return baseFindById(User, id, params);
 };
 
 /**
@@ -67,19 +67,19 @@ const findById = async function(id, params) {
 const update = async (id, data) => {
   if (data.password)
     return {
-      ...code_400,
+      ...rc400,
       errors: {
         password: [`This field is not allowed to be updated by this method.`]
       }
     };
-  return await baseUpdate(User, id, data);
+  return baseUpdate(User, id, data);
 };
 
 /**
  * Deletes a record based on its id.
  */
 const remove = async id => {
-  return await baseRemove(User, id);
+  return baseRemove(User, id);
 };
 
 module.exports = {

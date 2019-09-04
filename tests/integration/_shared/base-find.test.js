@@ -1,5 +1,5 @@
 const request = require('supertest');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const { apiUrl, authToken } = require('./params');
 
@@ -7,11 +7,10 @@ exports.run = ({ resourceSuffix, paginationData, selectData, totalCount }) => {
   describe(`GET ${apiUrl}${resourceSuffix}`, () => {
     // Pagination
     describe(`[pagination]`, () => {
-      paginationData.forEach(element => {
-        const query = element.query;
-        it(`Code 200: should GET ${element.dataLength} records when QUERY is '${query}'`, async () => {
+      paginationData.forEach(({ query, dataLength, limit, offset }) => {
+        it(`Code 200: should GET ${dataLength} records when QUERY is '${query}'`, async () => {
           const res = await request(apiUrl)
-            .get(`${resourceSuffix}?${element.query}`)
+            .get(`${resourceSuffix}?${query}`)
             .set('x-auth-token', authToken);
 
           expect(res.status).to.equal(200);
@@ -22,30 +21,30 @@ exports.run = ({ resourceSuffix, paginationData, selectData, totalCount }) => {
             .to.equal(200);
 
           expect(res.body)
-            .to.have.a.property('_meta')
+            .to.have.a.property('meta')
             .to.be.an('object');
 
-          expect(res.body._meta)
+          expect(res.body.meta)
             .to.have.a.property('limit')
             .to.be.a('number')
-            .to.equal(element.limit);
-          expect(res.body._meta)
+            .to.equal(limit);
+          expect(res.body.meta)
             .to.have.a.property('offset')
             .to.be.a('number')
-            .to.equal(element.offset);
+            .to.equal(offset);
 
-          expect(res.body._meta).to.not.have.a.property('totalCount');
+          expect(res.body.meta).to.not.have.a.property('totalCount');
 
           expect(res.body)
             .to.have.a.property('d')
             .to.be.an('array')
-            .to.have.length(element.dataLength);
+            .to.have.length(dataLength);
         });
       });
     });
     // TotalCount
     describe(`[pagination - total count]`, () => {
-      it(`Code 200: should GET _meta.totalCount when HEADER has a 'x-request-total-count' property`, async () => {
+      it(`Code 200: should GET meta.totalCount when HEADER has a 'x-request-total-count' property`, async () => {
         const res = await request(apiUrl)
           .get(`${resourceSuffix}`)
           .set('x-auth-token', authToken)
@@ -54,7 +53,7 @@ exports.run = ({ resourceSuffix, paginationData, selectData, totalCount }) => {
         expect(res.status).to.equal(200);
 
         expect(res.body)
-          .to.have.a.property('_meta')
+          .to.have.a.property('meta')
           .to.have.a.property('totalCount')
           .to.be.a('number')
           .to.equal(totalCount);
@@ -62,8 +61,7 @@ exports.run = ({ resourceSuffix, paginationData, selectData, totalCount }) => {
     });
     // Select
     describe(`[select]`, () => {
-      selectData.forEach(element => {
-        const query = element.query;
+      selectData.forEach(({ query, retornableFields, nonRetornableFields }) => {
         const url = `${resourceSuffix}?${query}&limit=1`;
         it(`Code 200: should GET records when QUERY is '${query}'`, async () => {
           const res = await request(apiUrl)
@@ -84,12 +82,12 @@ exports.run = ({ resourceSuffix, paginationData, selectData, totalCount }) => {
             .to.have.a.property('_id')
             .to.be.a('string');
 
-          element.retornableFields.forEach(field => {
+          retornableFields.forEach(field => {
             expect(res.body.d[0])
               .to.have.a.property(field.name)
               .to.be.a(field.type);
           });
-          element.nonRetornableFields.forEach(field => {
+          nonRetornableFields.forEach(field => {
             expect(res.body.d[0]).to.not.have.a.property(field.name);
           });
         });

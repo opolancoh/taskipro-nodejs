@@ -5,7 +5,7 @@ exports.validateSchema = (value, schema, onCreate) => {
 
   const result = Joi.validate(value, schema, {
     abortEarly: false,
-    context: { onCreate: onCreate }
+    context: { onCreate }
   });
 
   if (result.error) {
@@ -16,6 +16,6 @@ exports.validateSchema = (value, schema, onCreate) => {
       errors[element.context.key].push(element.message);
     });
   }
-  //return { validatedItem: result.value, errors };
+  // return { validatedItem: result.value, errors };
   return { errors };
 };

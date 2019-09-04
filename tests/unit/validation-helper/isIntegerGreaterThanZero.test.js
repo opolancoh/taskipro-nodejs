@@ -1,8 +1,6 @@
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
-const {
-  isIntegerGreaterThanZero
-} = require('../../../helpers/validation-helper');
+const { isIntegerGreaterThanZero } = require('../../../helpers/validation-helper');
 
 describe('isIntegerGreaterThanZero', () => {
   [

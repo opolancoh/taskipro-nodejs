@@ -1,5 +1,5 @@
 const request = require('supertest');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const { apiUrl, authToken } = require('../_shared/params');
 
@@ -16,8 +16,7 @@ exports.run = ({ resourceSuffix, validData, invalidData }) => {
     });
     //
     describe(`should GET`, () => {
-      validData.forEach(element => {
-        const query = element.query;
+      validData.forEach(({ query, retornableFields, nonRetornableFields }) => {
         it(`Code 200: should GET a record when query is '${query}'`, async () => {
           const id = dataFromDb[0]._id;
           const path = `${resourceSuffix}/${id}`;
@@ -36,12 +35,12 @@ exports.run = ({ resourceSuffix, validData, invalidData }) => {
             .to.have.a.property('d')
             .to.be.an('object');
 
-          element.retornableFields.forEach(field => {
+          retornableFields.forEach(field => {
             expect(res.body.d)
               .to.have.a.property(field.name)
               .to.be.a(field.type);
           });
-          element.nonRetornableFields.forEach(field => {
+          nonRetornableFields.forEach(field => {
             expect(res.body.d).to.not.have.a.property(field.name);
           });
         });

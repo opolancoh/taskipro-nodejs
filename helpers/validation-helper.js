@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 const validation = {};
 
 validation.objectIdRegExp = /^[0-9a-fA-F]{24}$/;

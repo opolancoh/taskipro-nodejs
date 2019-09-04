@@ -6,7 +6,7 @@ const validData = [
     body: {
       name: 'New Name'
     },
-    message: function() {
+    message: () => {
       return `should UPDATE an item changing 'name' to '${this.body.name}'`;
     }
   },
@@ -14,7 +14,7 @@ const validData = [
     body: {
       email: 'new_email@ikobit.com'
     },
-    message: function() {
+    message: () => {
       return `should UPDATE an item changing the 'email' to '${this.body.email}'`;
     }
   },
@@ -22,7 +22,7 @@ const validData = [
     body: {
       displayName: 'New Display Name'
     },
-    message: function() {
+    message: () => {
       return `should UPDATE an item changing the 'displayName' to '${this.body.displayName}'`;
     }
   },
@@ -30,20 +30,16 @@ const validData = [
     body: {
       roles: ['admin']
     },
-    message: function() {
-      return `should UPDATE an item changing the 'roles' to '${JSON.stringify(
-        this.body.roles
-      )}'`;
+    message: () => {
+      return `should UPDATE an item changing the 'roles' to '${JSON.stringify(this.body.roles)}'`;
     }
   },
   {
     body: {
       roles: ['admin', 'user']
     },
-    message: function() {
-      return `should UPDATE an item changing the 'roles' to '${JSON.stringify(
-        this.body.roles
-      )}'`;
+    message: () => {
+      return `should UPDATE an item changing the 'roles' to '${JSON.stringify(this.body.roles)}'`;
     }
   }
 ];

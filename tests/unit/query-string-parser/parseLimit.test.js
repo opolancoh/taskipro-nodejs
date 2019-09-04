@@ -1,5 +1,4 @@
-const expect = require('chai').expect;
-
+const { expect } = require('chai');
 const config = require('config');
 
 const { parseLimit } = require('../../../helpers/query-string-parser');

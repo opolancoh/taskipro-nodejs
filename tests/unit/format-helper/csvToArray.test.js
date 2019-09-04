@@ -1,4 +1,4 @@
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const { csvToArray } = require('../../../helpers/format-helper');
 
@@ -29,9 +29,7 @@ describe('csvToArray', () => {
 
     it(`should return ${JSON.stringify(item.result)} for value '${
       item.value
-    }' and type '${typeof item.value}' | result ${JSON.stringify(
-      result
-    )}`, () => {
+    }' and type '${typeof item.value}' | result ${JSON.stringify(result)}`, () => {
       expect(result).to.eql(item.result);
     });
   });

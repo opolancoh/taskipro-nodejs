@@ -4,7 +4,7 @@ const cors = require('cors');
 // error handler
 const { systemErrorHandler, customErrorHandler } = require('./helpers/error-handler');
 const notFoundHandler = require('./helpers/not-found-handler');
-//require('express-async-errors');
+// require('express-async-errors');
 
 // routers
 const homeRouter = require('./routes/home.route');
@@ -16,10 +16,10 @@ const app = express();
 // middleware
 app.use(express.json());
 app.use(
-    cors({
-      origin: '*'
-    })
-  );
+  cors({
+    origin: '*'
+  })
+);
 
 // setup routes
 app.use('/', homeRouter);

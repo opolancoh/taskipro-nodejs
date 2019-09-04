@@ -1,13 +1,14 @@
 {
   "name": "taskipro-nodejs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
     "test": "mocha tests/_all.test.js",
     "test:unit": "mocha tests/unit/_all.test.js",
-    "test:integration": "mocha tests/integration/_all.test.js"
+    "test:integration": "mocha tests/integration/_all.test.js",
+    "prelint": "eslint --ignore-path .gitignore ."
   },
   "keywords": [],
   "author": "",
@@ -24,8 +25,14 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.0",
     "mocha": "^6.2.0",
     "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
     "supertest": "^4.0.2"
   }
 }
