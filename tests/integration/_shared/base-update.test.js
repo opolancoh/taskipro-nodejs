@@ -45,7 +45,7 @@ exports.run = ({ resourceSuffix, validData, invalidData }) => {
             expect(res.body.d).to.not.have.a.property(field.name);
           });
           // check for properties and values
-          Object.entries(data).forEach(key => {
+          Object.keys(data).forEach(key => {
             const value = data[key];
             if (typeof value !== 'object') {
               expect(res.body.d).to.have.a.property(key, value);
