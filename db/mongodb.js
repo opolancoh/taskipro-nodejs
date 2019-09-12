@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const config = require('config');
 
+const { customErrorHandler } = require('../helpers/error-handler');
+
 const dbUri = config.get('secrets.dbUri');
 const dbName = config.get('db.name');
 const db = `${dbUri}/${dbName}`;
@@ -20,7 +22,6 @@ mongoose
     } */
   })
   .catch(err => {
-    console.log(`\nError connecting to database ${db}\n`);
-    console.error(err);
-    process.exit(1);
+    const message = `#DbError There was a problem connecting to database ${db}. ${err}`;
+    customErrorHandler(Error(message));
   });

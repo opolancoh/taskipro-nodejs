@@ -42,7 +42,7 @@ const schema = {
       then: Joi.required()
     }),
   password: Joi.string()
-    .min(6)
+    .min(8)
     .max(255)
     .label('Password')
     .when('$onCreate', {

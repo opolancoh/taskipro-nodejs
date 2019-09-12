@@ -15,25 +15,28 @@ const { rc500 } = require('./base-response');
   }
 }; */
 
-const systemErrorHandler = (err, req, res) => {
-  // customErrorHandler(err, 'error');
-  res.status(200).send({
-    ...rc500
-  });
-};
-
 const customErrorHandler = (err, level) => {
-  // console.log('stack', err.stack);
   const errorLevel = level || 'error';
-  const errorDescription = `#Exception ${err.stack}`;
+  const errorDescription = `${err.stack}`;
   const item = {
     level: errorLevel,
     timestamp: new Date(),
     description: errorDescription
   };
+  console.log('');
   console.log(item);
   // logger.log(errorLevel, errorDescription);
   // logToDb(item);
 };
 
-module.exports = { systemErrorHandler, customErrorHandler };
+const errorHandler = (err, req, res) => {
+  customErrorHandler(err);
+  const bodyResponse = { ...rc500 };
+  if (err.status && err.status !== 500) {
+    bodyResponse.code = err.status || 500;
+    bodyResponse.message = err.message;
+  }
+  res.status(200).send(bodyResponse);
+};
+
+module.exports = { errorHandler, customErrorHandler };

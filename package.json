@@ -1,8 +1,8 @@
 {
   "name": "taskipro-nodejs",
-  "version": "0.2.1",
-  "description": "",
-  "main": "index.js",
+  "version": "0.3.0",
+  "description": "TaskiPro REST API powered by NodeJS and Express",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
     "test": "mocha tests/_all.test.js",
@@ -18,6 +18,8 @@
     "config": "^3.2.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "http-errors": "^1.7.3",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.11",

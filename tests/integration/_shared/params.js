@@ -1,6 +1,6 @@
 exports.serverUrl = process.env.TASKIPRO_INTEGRATION_TEST_URI;
 
-exports.apiUrl = `${process.env.TASKIPRO_INTEGRATION_TEST_URI}/api`;
+exports.apiUrl = `${process.env.TASKIPRO_INTEGRATION_TEST_URI}`;
 
 exports.loginResourceSuffix = '/auth/login';
 

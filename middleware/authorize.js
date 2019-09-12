@@ -17,7 +17,7 @@ function authorize(roles) {
         // if token is valid, add user to the request
         decoded = jwt.verify(token, config.get('secrets.jwtPrivateKey'));
       } catch (ex) {
-        res.status(200).send({ ...rc400, message: 'Invalid token.' });
+        return res.status(200).send({ ...rc400, message: 'Invalid token.' });
       }
 
       if (Array.isArray(roles) && roles.length > 0) {

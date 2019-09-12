@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
-const { User } = require('../api/users/user.model');
+const { User } = require('../core/users/user.model');
 const { rc400 } = require('../helpers/base-response');
 
 /* service.signup = async item => {
